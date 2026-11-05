@@ -1,0 +1,8 @@
+{
+    "name": "Kunduz Kabab",
+    "rollNumber": 1,
+    "meal": "Kabab",
+    "timing": "15-25",
+    "rating": "3.4",
+    "minPrice": "200"
+}
