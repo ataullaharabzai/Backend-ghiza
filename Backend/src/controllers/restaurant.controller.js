@@ -30,7 +30,7 @@ async function saveRestaurant(req, res) {
       timing: timing,
       rating: rating,
       minPrice: minPrice,
-      avatar: req.file ? `/db/restaurantImages/${req.file.url}` : null,
+      avatar: req.file ? `/db/restaurantImages/${req.file.filename}` : null,
     };
 
     allRestaurants.push(newRestaurant);
