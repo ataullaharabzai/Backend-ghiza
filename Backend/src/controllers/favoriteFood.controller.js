@@ -11,7 +11,7 @@ async function registerFavoriteFood(req, res, next) {
       return next(error);
     }
 
-    const { rollNumber, name, desc, price, rating, restaurant } = req.body; 
+    const { rollNumber, name, desc, price, rating, restaurant } = req.body;
 
     const filePath = path.join(__dirname, "../db/favoritesFoods.json");
     const favoritesData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
@@ -29,6 +29,7 @@ async function registerFavoriteFood(req, res, next) {
     }
 
     const newFavoriteFood = {
+      id: nanoid(),
       rollNumber: rollNumber,
       name: name,
       desc: desc,
@@ -40,7 +41,7 @@ async function registerFavoriteFood(req, res, next) {
 
     allFavoriteFood.push(newFavoriteFood);
 
-    fs.writeFileSync(filePath, JSON.stringify({allFavoriteFood}, null, 2))
+    fs.writeFileSync(filePath, JSON.stringify({ allFavoriteFood }, null, 2));
 
     return successMsg(res, newFavoriteFood, "Food added to Favorites", 201);
   } catch (error) {
