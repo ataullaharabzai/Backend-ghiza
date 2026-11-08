@@ -13,4 +13,8 @@ router.post(
   favoriteController.registerFavoriteFood,
 );
 
+router.get('/favorites', favoriteController.getFavoriteFoods)
+router.get('/favorites/:id', favoriteController.getFavoriteFoodById)
+router.delete('/favorites/:id', favoriteController.removeFavoriteFood)
+
 module.exports = router;

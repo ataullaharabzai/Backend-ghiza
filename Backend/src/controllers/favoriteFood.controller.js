@@ -49,4 +49,83 @@ async function registerFavoriteFood(req, res, next) {
   }
 }
 
-module.exports = { registerFavoriteFood };
+async function getFavoriteFoods(req, res, next) {
+  try {
+    const filePath = path.join(__dirname, "../db/favoritesFoods.json");
+    const favoritesData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    const favoriteFoods = favoritesData.allFavoriteFood;
+
+    if (!favoriteFoods) {
+      const error = new Error("Foods not found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    return successMsg(res, favoriteFoods, "Foods fetched successfully", 200);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function getFavoriteFoodById(req, res, next) {
+  try {
+    const foodId = req.params.id;
+
+    const filePath = path.join(__dirname, "../db/favoritesFoods.json");
+    const favoritesData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    const favoriteFoods = favoritesData.allFavoriteFood;
+
+    const isFoodMatching = favoriteFoods.findIndex(
+      (food) => food.id === foodId,
+    );
+
+    if (isFoodMatching === -1) {
+      const error = new Error("Food not found");
+      error.statusCode = 409;
+      return next(error);
+    }
+
+    const matchedFood = favoriteFoods[isFoodMatching];
+
+    return successMsg(res, matchedFood, "Food found successfully", 200);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+async function removeFavoriteFood(req, res, next) {
+  try {
+    const foodId = req.params.id;
+
+    const filePath = path.join(__dirname, "../db/favoritesFoods.json");
+    const favoritesData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    let allFavoriteFood = favoritesData.allFavoriteFood;
+
+    if (!allFavoriteFood) {
+      const error = new Error("Food not found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    const removeFood = allFavoriteFood.filter((food) => food.id !== foodId);
+
+    allFavoriteFood = removeFood
+
+    fs.writeFileSync(filePath, JSON.stringify({allFavoriteFood}, null, 2))
+
+    return successMsg(res, allFavoriteFood[removeFood], "Food removed", 200)
+
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = {
+  registerFavoriteFood,
+  getFavoriteFoods,
+  getFavoriteFoodById,
+  removeFavoriteFood
+};

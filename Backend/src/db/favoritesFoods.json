@@ -1,26 +1,24 @@
 {
   "allFavoriteFood": [
     {
-      "id": 1,
-      "name": "Kabuli Pulao",
-      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=85",
-      "description": "Slow-cooked lamb, fragrant rice, carrots and raisins.",
-      "price": 320,
-      "rating": "4.9",
-      "restaurant": "Kabul Darbar"
-    },
-    {
-      "rollNumber": "2",
-      "avatar": null
-    },
-    {
+      "id": "-4LrzBQKj87NfwbS-lmkc",
       "rollNumber": "1",
       "name": "Qabuli Pulaw",
       "desc": "This is favorite testing for Qabuli",
       "rating": "4.6",
       "price": "300",
       "restaurant": "Kabul Darbar",
-      "avatar": "/db/foodsImages/fb0adfc35de553b0ce81f81ed2d72aaf"
+      "avatar": "/db/foodsImages/64ee8a5a3dcb4d14d9071a14b27ecac3"
+    },
+    {
+      "id": "geTiaxvYq0gdxzBt5cUXT",
+      "rollNumber": "3",
+      "name": "Special Mantu",
+      "desc": "This is favorite testing for Mantu",
+      "rating": "4.6",
+      "price": "120",
+      "restaurant": "Kabul Darbar",
+      "avatar": "/db/foodsImages/85da39afa58b39028d639f282a411cb9"
     }
   ]
 }
