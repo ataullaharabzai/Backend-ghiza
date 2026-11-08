@@ -1,0 +1,26 @@
+{
+  "allFavoriteFood": [
+    {
+      "id": 1,
+      "name": "Kabuli Pulao",
+      "image": "https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=85",
+      "description": "Slow-cooked lamb, fragrant rice, carrots and raisins.",
+      "price": 320,
+      "rating": "4.9",
+      "restaurant": "Kabul Darbar"
+    },
+    {
+      "rollNumber": "2",
+      "avatar": null
+    },
+    {
+      "rollNumber": "1",
+      "name": "Qabuli Pulaw",
+      "desc": "This is favorite testing for Qabuli",
+      "rating": "4.6",
+      "price": "300",
+      "restaurant": "Kabul Darbar",
+      "avatar": "/db/foodsImages/fb0adfc35de553b0ce81f81ed2d72aaf"
+    }
+  ]
+}
