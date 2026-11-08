@@ -7,13 +7,12 @@ const upload = multer({ dest: path.join(__dirname, "../db/restaurantImages") });
 const router = express.Router();
 
 router.post(
-  "/setRestaurant",
+  "/restaurants",
   upload.single("avatar"),
   restaurantController.saveRestaurant,
 );
-
 router.get('/restaurants', restaurantController.getAllRestaurants)
-
-router.get('/restaurant/:id', restaurantController.getRestaurantById)
+router.get('/restaurants/:id', restaurantController.getRestaurantById)
+router.delete('/restaurants/:id', restaurantController.removeRestaurant)
 
 module.exports = router;

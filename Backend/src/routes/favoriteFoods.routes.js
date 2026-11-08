@@ -12,7 +12,6 @@ router.post(
   upload.single("avatar"),
   favoriteController.registerFavoriteFood,
 );
-
 router.get('/favorites', favoriteController.getFavoriteFoods)
 router.get('/favorites/:id', favoriteController.getFavoriteFoodById)
 router.delete('/favorites/:id', favoriteController.removeFavoriteFood)

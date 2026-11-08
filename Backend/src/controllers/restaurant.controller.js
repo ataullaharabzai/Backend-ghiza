@@ -85,19 +85,18 @@ async function getRestaurantById(req, res) {
       (restaurant) => restaurant.id === restaurantId,
     );
 
-    if(isRestaurantMatching === -1) {
+    if (isRestaurantMatching === -1) {
       return res.status(404).json({
-        message: "The restaurant is not found"
-      })
+        message: "The restaurant is not found",
+      });
     }
 
-    const restaurantFound = allRestaurants[isRestaurantMatching]
+    const restaurantFound = allRestaurants[isRestaurantMatching];
 
     return res.status(200).json({
       message: "Restaurant found successfully",
-      restaurantFound
-    })
-    
+      restaurantFound,
+    });
   } catch (error) {
     return res.status(500).json({
       message: "Internal server error",
@@ -105,4 +104,43 @@ async function getRestaurantById(req, res) {
   }
 }
 
-module.exports = { saveRestaurant, getAllRestaurants, getRestaurantById };
+async function removeRestaurant(req, res, next) {
+  try {
+    const restaurantId = req.params.id;
+
+    const filePath = path.join(__dirname, "../db/restaurantsData.json");
+    const restaurantsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    let allRestaurants = restaurantsData.allRestaurants;
+
+    if (!allRestaurants) {
+      const error = new Error("Restaurant not found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    const removedRestaurant = allRestaurants.filter(
+      (restaurant) => restaurant.id !== restaurantId,
+    );
+
+    allRestaurants = removedRestaurant;
+
+    fs.writeFileSync(filePath, JSON.stringify({ allRestaurants }, null, 2));
+
+    return successMsg(
+      res,
+      allRestaurants[removedRestaurant],
+      "Restaurant removed",
+      200,
+    );
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = {
+  saveRestaurant,
+  getAllRestaurants,
+  getRestaurantById,
+  removeRestaurant,
+};

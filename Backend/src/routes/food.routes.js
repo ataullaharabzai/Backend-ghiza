@@ -6,9 +6,10 @@ const path = require("path");
 const upload = multer({ dest: path.join(__dirname, "../db/foodsImages") });
 const router = express.Router();
 
-router.post("/registerFood", upload.single("avatar"), foodController.setFood);
-router.get('/getFoods', foodController.getAllFoods)
-router.get('/getFood/:id', foodController.getFoodById)
+router.post("/foods", upload.single("avatar"), foodController.setFood);
+router.get('/foods', foodController.getAllFoods)
+router.get('/foods/:id', foodController.getFoodById)
+router.delete('/foods/:id', foodController.removeFood)
 
 
 module.exports = router

@@ -37,7 +37,6 @@ async function setFood(req, res) {
     fs.writeFileSync(filePath, JSON.stringify({ allPopularFoods }, null, 2));
 
     return successMsg(res, newFood, "Food created successfully", 201);
-
   } catch (error) {
     return res.status(500).json({
       message: "Internal server error",
@@ -95,4 +94,31 @@ async function getFoodById(req, res) {
   }
 }
 
-module.exports = { setFood, getAllFoods, getFoodById };
+async function removeFood(req, res, next) {
+  try {
+    const foodId = req.params.id;
+
+    const filePath = path.join(__dirname, "../db/foods.json");
+    const foodData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+
+    let allPopularFoods = foodData.allPopularFoods;
+
+    if (!allPopularFoods) {
+      const error = new Error("Food not found");
+      error.statusCode = 404;
+      return next(error);
+    }
+
+    const removedFood = allPopularFoods.filter((food) => food.id !== foodId);
+
+    allPopularFoods = removedFood;
+
+    fs.writeFileSync(filePath, JSON.stringify({ allPopularFoods }, null, 2));
+
+    return successMsg(res, allPopularFoods[removeFood], "Food removed", 200);
+  } catch (error) {
+    return next(error);
+  }
+}
+
+module.exports = { setFood, getAllFoods, getFoodById, removeFood };

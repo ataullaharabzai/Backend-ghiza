@@ -26,7 +26,7 @@ app.use(
 // APIs
 app.use("/api/auth", authRoute); // Users API
 app.use("/api/restaurant", restaurantRoute); // Restaurants API
-app.use("/api/foods", foodRoute); // Foods API
+app.use("/api/food", foodRoute); // Foods API
 app.use('/api/favorite', favoriteRoutes) //Favorite API
 
 
