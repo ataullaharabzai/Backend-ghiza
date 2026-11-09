@@ -6,7 +6,7 @@ const path = require("path");
 
 
 async function userRegister(req, res) {
-  const { name, email, password, phone } = req.body;
+  const { name, email, password, phone, role } = req.body;
   const users = userData.users;
 
   const isUserAlreadyExist = users.find(
@@ -28,6 +28,7 @@ async function userRegister(req, res) {
     email: email,
     password: hashPassword,
     phone: phone,
+    role: role
   };
 
   users.push(newUser);
