@@ -3,3 +3,5 @@ node_modules
 restaurantsData.json
 users.json
 foods.json
+
+.env

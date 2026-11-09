@@ -6,7 +6,7 @@ const path = require("path");
 
 
 async function userRegister(req, res) {
-  const { name, email, password, phone } = req.body;
+  const { name, email, password, phone, role } = req.body;
   const users = userData.users;
 
   const isUserAlreadyExist = users.find(
@@ -28,6 +28,7 @@ async function userRegister(req, res) {
     email: email,
     password: hashPassword,
     phone: phone,
+    role: role
   };
 
   users.push(newUser);
@@ -46,7 +47,7 @@ async function loginUser(req, res) {
   try {
     const { phone, password } = req.body;
 
-    const filePath = path.join(__dirname, "../../src/db/users.json");
+    const filePath = path.join(__dirname, "../db/users.json");
     const userData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     const users = userData.users;
@@ -89,7 +90,7 @@ async function updateUser(req, res) {
 
     const userId = req.params.id
 
-    const filePath = path.join(__dirname, '../db/db.json')
+    const filePath = path.join(__dirname, '../db/users.json')
     const userData = JSON.parse(fs.readFileSync(filePath, "utf-8"))
 
     const users = userData.users
