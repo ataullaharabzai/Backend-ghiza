@@ -47,7 +47,7 @@ async function loginUser(req, res) {
   try {
     const { phone, password } = req.body;
 
-    const filePath = path.join(__dirname, "../../src/db/users.json");
+    const filePath = path.join(__dirname, "../db/users.json");
     const userData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     const users = userData.users;
@@ -90,7 +90,7 @@ async function updateUser(req, res) {
 
     const userId = req.params.id
 
-    const filePath = path.join(__dirname, '../db/db.json')
+    const filePath = path.join(__dirname, '../db/users.json')
     const userData = JSON.parse(fs.readFileSync(filePath, "utf-8"))
 
     const users = userData.users

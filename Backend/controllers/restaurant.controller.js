@@ -4,15 +4,24 @@ const path = require("path");
 
 async function saveRestaurant(req, res, next) {
   try {
-    const { rollNumber, name, meal, timing, rating, minPrice, category, menuItems } = req.body;
+    const {
+      rollNumber,
+      name,
+      meal,
+      timing,
+      rating,
+      minPrice,
+      category,
+      menuItems,
+    } = req.body;
 
-    if(!rollNumber) {
-      const error = new Error("Roll number is required")
-      error.statusCode = 400
-      return next(error)
+    if (!rollNumber) {
+      const error = new Error("Roll number is required");
+      error.statusCode = 400;
+      return next(error);
     }
 
-    const filePath = path.join(__dirname, "../../src/db/restaurantsData.json");
+    const filePath = path.join(__dirname, "../db/restaurantsData.json");
     const restaurantsData = JSON.parse(fs.readFileSync(filePath, "utf-8"));
 
     const allRestaurants = restaurantsData.allRestaurants;
