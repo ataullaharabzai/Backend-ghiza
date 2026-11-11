@@ -5,7 +5,8 @@ const path = require("path");
 const authRoute = require("./routes/auth.routes");
 const restaurantRoute = require("./routes/restaurants.routes");
 const foodRoute = require("./routes/food.routes");
-const favoriteRoutes = require('./routes/favoriteFoods.routes');
+const favoriteRoute = require('./routes/favoriteFoods.routes');
+const orderRoute = require('./routes/orders.routes')
 const errorMsg = require("./middlewares/error.middleware");
 
 const PORT = process.env.PORT
@@ -29,7 +30,8 @@ app.use(
 app.use("/api/auth", authRoute); // Users API
 app.use("/api/restaurant", restaurantRoute); // Restaurants API
 app.use("/api/food", foodRoute); // Foods API
-app.use('/api/favorite', favoriteRoutes) //Favorite API
+app.use('/api/favorite', favoriteRoute) //Favorite API
+app.use('/api/order', orderRoute) // Order API
 
 
 app.use(errorMsg) // Centralized error message
