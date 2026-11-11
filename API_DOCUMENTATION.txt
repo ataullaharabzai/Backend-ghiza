@@ -1,0 +1,85 @@
+GHIZA BACKEND APIs
+=================
+TODO: After adding tokens update the docs!!
+
+Base URL: http://localhost:3000 (local PORT; server reads PORT from environment).
+All endpoints are public. No authentication token is issued or required.
+Body examples show fields read by the controllers; only restaurant rollNumber is explicitly validated as required.
+JSON bodies use application/json. Create endpoints with images accept multipart form fields and optional "avatar".
+IDs in examples are placeholders.
+
+AUTH
+----
+POST /api/auth/register | Register a user.
+Body: {"name":"Sam","email":"sam@example.com","password":"secret","phone":"0700000000","role":"customer"}
+201: {"message":"User created","newUser":{"id":"<id>","name":"Sam","email":"sam@example.com","password":"<bcrypt-hash>","phone":"0700000000","role":"customer"}}
+
+POST /api/auth/login | Check phone and password; no token is created.
+Body: {"phone":"0700000000","password":"secret"}
+200: {"message":"Login successfully","user":{"name":"Sam","phone":"0700000000","email":"sam@example.com"}}
+
+PATCH /api/auth/update/{id} | Merge body fields into a user.
+Body: {"name":"Sam"}
+200: {"message":"User updated","updateUser":{"id":"<id>","name":"Sam","password":"<bcrypt-hash>"}}
+
+RESTAURANTS
+-----------
+POST /api/restaurant/restaurants | Create restaurant; multipart: rollNumber, name, meal, timing, rating, minPrice, category, menuItems; optional avatar.
+201: {"message":"Restaurant registered","newRestaurant":{"id":"<id>","rollNumber":"R1","name":"Cafe","avatar":null}}
+GET /api/restaurant/restaurants | List restaurants.
+200: {"message":"Restaurants fetched Successfully","allRestaurants":[{"id":"<id>","name":"Cafe"}]}
+GET /api/restaurant/restaurants/{id} | Get restaurant by ID.
+200: {"message":"Restaurant found successfully","restaurantFound":{"id":"<id>","name":"Cafe"}}
+DELETE /api/restaurant/restaurants/{id} | Delete restaurant by ID.
+Success response: none; it writes the deletion, then returns 500 because successMsg is undefined.
+
+FOODS
+-----
+POST /api/food/foods | Create food; multipart: rollNumber, name, price, desc, rating, restaurant; optional avatar.
+201: {"success":true,"message":"Food created successfully","data":{"id":"<id>","rollNumber":"F1","name":"Meal","price":"320","avatar":null}}
+GET /api/food/foods | List foods.
+200: {"success":true,"message":"Foods fetched successfully","data":[{"id":1,"name":"Burger","price":320}]}
+GET /api/food/foods/{id} | Get food by ID.
+200: {"success":true,"message":"Food matched","data":{"id":"<id>","name":"Meal"}}
+DELETE /api/food/foods/{id} | Delete food by ID.
+200: {"success":true,"message":"Food removed"}
+
+FAVORITES
+---------
+POST /api/favorite/favorites | Add favorite; multipart: rollNumber, name, desc, price, rating, restaurant; optional avatar.
+201: {"success":true,"message":"Food added to Favorites","data":{"id":"<id>","rollNumber":"F1","name":"Meal","price":"120","avatar":null}}
+GET /api/favorite/favorites | List favorites.
+200: {"success":true,"message":"Foods fetched successfully","data":[{"id":"<id>","name":"Meal"}]}
+GET /api/favorite/favorites/{id} | Get favorite by ID.
+200: {"success":true,"message":"Food found successfully","data":{"id":"<id>","name":"Meal"}}
+DELETE /api/favorite/favorites/{id} | Delete favorite by ID.
+200: {"success":true,"message":"Food removed"}
+
+ORDERS
+------
+POST /api/order/orders | Create order.
+Body: {"name":"Burger","price":100,"quantity":2,"customer":"Sam","portion":"Full","spicLevel":"Medium","extraItems":["Cola"],"note":"No onions"}
+201: {"success":true,"message":"Order created","data":{"id":"<id>","name":"Burger","price":100,"quantity":2,"customer":"Sam","avatar":null}}
+GET /api/order/orders | List orders.
+200: {"success":true,"message":"Orders fetched successfully","data":[{"id":"<id>","name":"Burger"}]}
+GET /api/order/orders/{id} | Get order by ID.
+200: {"success":true,"message":"Order found","data":{"id":"<id>","name":"Burger"}}
+PATCH /api/order/orders/{id} | Merge body fields into an order.
+Body: {"quantity":3}
+200: {"success":true,"message":"Order updated successfully","data":{"id":"<id>","name":"Burger","quantity":3}}
+DELETE /api/order/orders/{id} | Cancel an order.
+200: {"success":true,"message":"Order cancelled"}
+
+COMMON ERRORS
+-------------
+Central format: {"success":false,"message":"<error>"}; status defaults to 500. Some handlers use {"message":"..."} or {"error":"...","message":"..."}.
+Common statuses: 400 missing restaurant rollNumber; 401 invalid password; 404 missing record; 409 duplicate. Statuses vary by endpoint.
+
+KNOWN ISSUES
+FIXME: Must solve!!
+------------
+- No auth/authorization; login issues no token. Registration and update responses expose password hashes.
+- User update can reject the first user and may report success for an unknown ID.
+- Order PATCH does not save. Restaurant DELETE writes its change but returns 500.
+- Food, favorite, and order deletes omit the deleted record; some missing-ID deletes still report success.
+- Uploaded files are stored in a different directory from the one served. Most request fields are not validated.
